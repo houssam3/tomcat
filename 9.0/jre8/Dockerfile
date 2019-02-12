@@ -46,6 +46,11 @@ RUN set -ex; \
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		libapr1 \
 	&& rm -rf /var/lib/apt/lists/*
+	
+	
+##Houssam	
+RUN apt-get install tesseract-ocr
+	
 
 # see https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/KEYS
 # see also "update.sh" (https://github.com/docker-library/tomcat/blob/master/update.sh)
