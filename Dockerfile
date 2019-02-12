@@ -8,6 +8,7 @@ WORKDIR /usr/local/tomcat
 
 EXPOSE 8080
 
+RUN echo 'Done with TC, running Tesseract'
 
 FROM ubuntu:18.04
 
@@ -35,7 +36,7 @@ RUN apt-get update && apt-get install -y \
 	xzgv \
 	zlib1g-dev 
 
-
+RUN echo 'SSH for diagnostic'
 # SSH for diagnostic
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages openssh-server
 RUN mkdir /var/run/sshd
@@ -48,6 +49,8 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
+
+RUN echo 'Directories'
 
 # Directories
 ENV SCRIPTS_DIR /home/scripts
@@ -68,6 +71,8 @@ COPY ./container-scripts/* ${SCRIPTS_DIR}/
 RUN chmod +x ${SCRIPTS_DIR}/*
 RUN ${SCRIPTS_DIR}/repos_clone.sh
 RUN ${SCRIPTS_DIR}/tessdata_download.sh
+
+RUN echo 'Done'
 
 WORKDIR /home
 
