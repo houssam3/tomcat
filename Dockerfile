@@ -77,7 +77,15 @@ RUN chmod +x ${SCRIPTS_DIR}/*
 RUN ${SCRIPTS_DIR}/repos_clone.sh
 
 RUN echo 'Running tessdata_download'
-RUN ${SCRIPTS_DIR}/tessdata_download.sh
+#RUN ${SCRIPTS_DIR}/tessdata_download.sh
+
+# osd	Orientation and script detection
+RUN wget -O ${TESSDATA_PREFIX}/osd.traineddata https://github.com/tesseract-ocr/tessdata/raw/3.04.00/osd.traineddata
+# equ	Math / equation detection
+RUN wget -O ${TESSDATA_PREFIX}/equ.traineddata https://github.com/tesseract-ocr/tessdata/raw/3.04.00/equ.traineddata
+# eng English
+RUN wget -O ${TESSDATA_PREFIX}/eng.traineddata https://github.com/tesseract-ocr/tessdata/raw/4.00/eng.traineddata
+# other languages: https://github.com/tesseract-ocr/tesseract/wiki/Data-Files
 
 RUN echo 'Done'
 WORKDIR /home
