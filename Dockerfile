@@ -74,7 +74,20 @@ RUN mkdir ${TESSDATA_PREFIX}
 RUN echo 'Running repos_clone'
 
 RUN chmod +x ${SCRIPTS_DIR}/*
-RUN ${SCRIPTS_DIR}/repos_clone.sh
+#RUN ${SCRIPTS_DIR}/repos_clone.sh
+#!/bin/bash
+
+RUN echo 'Running Downloading source code'
+
+# Downloading source code
+# Leptonica
+# RUN git ls-remote ${LEP_REPO_URL} HEAD
+RUN git clone ${LEP_REPO_URL} ${LEP_SRC_DIR}
+# Tesseract
+# RUN git ls-remote ${TES_REPO_URL} HEAD
+RUN git clone ${TES_REPO_URL} ${TES_SRC_DIR}
+RUN echo 'Done Downloading source code'
+
 
 RUN echo 'Running tessdata_download'
 #RUN ${SCRIPTS_DIR}/tessdata_download.sh
