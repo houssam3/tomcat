@@ -50,7 +50,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
-RUN echo 'Directories'
+RUN echo 'Initializing Directories Env'
 
 # Directories
 ENV SCRIPTS_DIR /home/scripts
@@ -62,18 +62,22 @@ ENV TES_REPO_URL https://github.com/tesseract-ocr/tesseract.git
 ENV TES_SRC_DIR ${BASE_DIR}/tesseract
 ENV TESSDATA_PREFIX /usr/local/share/tessdata
 
+RUN echo 'Creating Directories'
+
 RUN mkdir ${SCRIPTS_DIR}
 RUN mkdir ${PKG_DIR}
 RUN mkdir ${BASE_DIR}
 RUN mkdir ${TESSDATA_PREFIX}
 
-COPY ./container-scripts/* ${SCRIPTS_DIR}/
+#COPY ./container-scripts/* ${SCRIPTS_DIR}/
+
+RUN echo 'Running repos_clone'
+
 RUN chmod +x ${SCRIPTS_DIR}/*
 RUN ${SCRIPTS_DIR}/repos_clone.sh
+
+RUN echo 'Running tessdata_download'
 RUN ${SCRIPTS_DIR}/tessdata_download.sh
 
 RUN echo 'Done'
-
 WORKDIR /home
-
-
